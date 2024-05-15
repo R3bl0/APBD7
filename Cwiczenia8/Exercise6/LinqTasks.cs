@@ -1,4 +1,5 @@
-﻿using Exercise6.Models;
+﻿using System.Runtime.Intrinsics.X86;
+using Exercise6.Models;
 
 namespace Exercise6
 {
@@ -312,7 +313,7 @@ namespace Exercise6
         /// </summary>
         public static IEnumerable<Emp> Task12()
         {
-            IEnumerable<Emp> result = null;
+            IEnumerable<Emp> result = CustomExtensionMethods.fun(Emps);
             return result;
         }
 
@@ -349,6 +350,11 @@ namespace Exercise6
 
     public static class CustomExtensionMethods
     {
-        //Put your extension methods here
+        public static IEnumerable<Emp> fun(IEnumerable<Emp> emps)
+        {
+            return emps.Where(e => emps.Any(emp => emp.Mgr == e))
+                .OrderBy(e => e.Ename)
+                .ThenByDescending(e => e.Salary);
+        }
     }
 }
